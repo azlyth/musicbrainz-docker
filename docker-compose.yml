@@ -1,20 +1,20 @@
 postgresqldata:
-  build: data-dockerfile
+  build: images/data
   volumes:
     - ./data/dumps:/media/dbdump:rw
 
 postgresql:
-  build: postgres-dockerfile
+  build: images/postgres
   restart: always
   env_file:
-   - ./postgres-dockerfile/postgres.env
+    - ./images/postgres/postgres.env
   volumes:
    - ./data/pg:/var/lib/postgresql/data
   expose:
    - "5432"
 
 musicbrainz:
-  build: musicbrainz-dockerfile
+  build: images/musicbrainz
   ports:
    - "5000:5000"
   volumes_from:
@@ -29,14 +29,14 @@ musicbrainz:
    - search:search
 
 indexer:
-  build: indexer-dockerfile
+  build: images/indexer
   links:
    - postgresql:db
   volumes:
    - ./data/misc:/home/search/data
 
 search:
-  build: search-dockerfile
+  build: images/search
   expose:
    - "8080"
   volumes:
