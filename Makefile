@@ -9,7 +9,7 @@ init-db: start-db
 	docker-compose exec postgresql dropdb -U musicbrainz musicbrainz
 
 create-db: init-db
-	docker-compose run --rm musicbrainz /createdb.sh
+	docker-compose run --rm manager /createdb.sh
 
 fetch-db: init-db
-	docker-compose run --rm musicbrainz /createdb.sh -fetch
+	docker-compose run --rm manager /createdb.sh -fetch
